@@ -1,6 +1,6 @@
 
 # IM - Heig-VD
-# Prog Web
+## Prog Web
 
 - Programmation modulaire
 - Canvas API et boucle d'animation
