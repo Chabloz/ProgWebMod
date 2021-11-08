@@ -1,4 +1,4 @@
-export default class {
+export default class Circle {
 
   constructor({x, y, r, speed, dir, color}) {
     this.x = x;

@@ -1,6 +1,6 @@
 import Circle from '../Circle.js';
 
-export default class extends Circle {
+export default class CircleInFlatTorus extends Circle {
 
   move(deltaT, width, height) {
     super.move(deltaT);

@@ -1,17 +1,17 @@
-export default class {
+export default class Keyboard {
 
   constructor() {
-    window.addEventListener('keydown', evt => this.onKeyDown(evt));
-    window.addEventListener('keyup', evt => this.onKeyUp(evt));
-    this.keysPressed = new Map();
+    window.addEventListener('keydown', evt => this.#onKeyDown(evt));
+    window.addEventListener('keyup', evt => this.#onKeyUp(evt));
+    this.keysPressed = new Set();
   }
 
-  onKeyDown(evt) {
+  #onKeyDown(evt) {
     let key = evt.code;
-    this.keysPressed.set(key, key);
+    this.keysPressed.add(key);
   }
 
-  onKeyUp(evt) {
+  #onKeyUp(evt) {
     let key = evt.code;
     this.keysPressed.delete(key);
   }
