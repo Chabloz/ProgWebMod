@@ -2,6 +2,7 @@ import {getRandomInt} from '../lib/math.js';
 import Circle from '../class/Circle/InFlatTorus.js';
 import Keyboard from '../class/Keyboard.js';
 import randomColor from '../lib/randomcolor.js';
+// import MainLoop from '../lib/mainloop.js';
 
 const ctx = document.querySelector('canvas').getContext('2d');
 // Set the canvas size as the same as the DOM element size
@@ -40,6 +41,8 @@ for (let i = 0; i < 300; i++) {
 
 circles.sort((c1, c2) => c1.compareTo(c2));
 
+
+
 let lastTime = 0;
 
 function tick(time) {
@@ -72,3 +75,20 @@ function tick(time) {
 
 // Start the animation loop
 requestAnimationFrame(tick);
+
+
+// let angle;
+// MainLoop
+//   .setBegin(() => angle = getAngleFromKeyPressed())
+//   .setUpdate((dt) => {
+//     if (angle !== false) {
+//       circles.forEach(c => c.setDir(angle));
+//       circles.forEach(c => c.move(dt, ctx.canvas.width, ctx.canvas.height));
+//     }
+//   })
+//   .setDraw(() => {
+//     ctx.canvas.width = ctx.canvas.clientWidth;
+//     ctx.canvas.height = ctx.canvas.clientHeight;
+//     circles.forEach(c => c.draw(ctx));
+//   })
+//   .start();
