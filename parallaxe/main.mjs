@@ -4,6 +4,8 @@ import Keyboard from '../class/Keyboard.js';
 import randomColor from '../lib/randomcolor.js';
 
 const ctx = document.querySelector('canvas').getContext('2d');
+// Set the canvas size as the same as the DOM element size
+// (as the same of the viewport size if you look at the css)
 ctx.canvas.width = ctx.canvas.clientWidth;
 ctx.canvas.height = ctx.canvas.clientHeight;
 
@@ -21,10 +23,10 @@ const getAngleFromKeyPressed = () => {
   return false;
 }
 
-let circles = [];
+const circles = [];
 
 for (let i = 0; i < 300; i++) {
-  let r = getRandomInt(3, Math.max(i / 5, 3));
+  const r = getRandomInt(3, Math.max(i / 5, 3));
 
   circles.push(new Circle({
     x: getRandomInt(0, ctx.canvas.width),
@@ -53,7 +55,7 @@ function tick(time) {
   if (dt >= 1000/30) return;
 
   // User inputs management
-  let angle = getAngleFromKeyPressed();
+  const angle = getAngleFromKeyPressed();
 
   // World update
   if (angle !== false) {
