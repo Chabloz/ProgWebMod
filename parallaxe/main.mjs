@@ -29,7 +29,7 @@ for (let i = 0; i < 300; i++) {
   circles.push(new Circle({
     x: getRandomInt(0, ctx.canvas.width),
     y: getRandomInt(0, ctx.canvas.height),
-    speed: r / 100, // [pixel / ms]
+    speed: r / 100, // [pixel / ms] // (pixel is not a very good choice for a unit, but this will be ok for our first animation)
     r,
     dir: 0, // radian
     color: randomColor()
@@ -48,7 +48,8 @@ function tick(time) {
   const dt = time - lastTime;
   lastTime = time;
 
-  // Drop frame if dt < 30 fps
+  // if dt is too high, we skip the world update and rendering for now
+  // Hopefully, we will catch up on the next tick call
   if (dt >= 1000/30) return;
 
   // User inputs management
@@ -60,9 +61,10 @@ function tick(time) {
     circles.forEach(c => c.move(dt, ctx.canvas.width, ctx.canvas.height));
   }
 
-  // Draw
+  // Clean all
   ctx.canvas.width = ctx.canvas.clientWidth;
   ctx.canvas.height = ctx.canvas.clientHeight;
+  // Draw all
   circles.forEach(c => c.draw(ctx));
 }
 
