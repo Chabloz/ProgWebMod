@@ -2,7 +2,7 @@ import {getRandomInt} from '../lib/math.js';
 import Circle from '../class/Circle/InFlatTorus.js';
 import Keyboard from '../class/Keyboard.js';
 import randomColor from '../lib/randomcolor.js';
-// import MainLoop from '../lib/mainloop.js';
+import MainLoop from '../lib/mainloop.js';
 
 const ctx = document.querySelector('canvas').getContext('2d');
 // Set the canvas size as the same as the DOM element size
@@ -90,5 +90,10 @@ requestAnimationFrame(tick);
 //     ctx.canvas.width = ctx.canvas.clientWidth;
 //     ctx.canvas.height = ctx.canvas.clientHeight;
 //     circles.forEach(c => c.draw(ctx));
+//   })
+//   .setEnd((fps, panic) => {
+//     if (!panic) return;
+//     const discardedTime = Math.round(MainLoop.resetFrameDelta());
+//     console.warn(`Main loop panicked, probably because the browser tab was put in the background. Discarding ${discardedTime} [ms]`);
 //   })
 //   .start();
