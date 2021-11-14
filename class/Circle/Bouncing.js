@@ -5,7 +5,7 @@ export default class CircleBouncing extends Circle {
   constructor({x, y , r, velX = 0, velY = 0, color}) {
     // on voit ici une première problématique de l'heritage
     // si on a mal pensé la classe mère pour sa spécialisation
-    // en effet la direction et la vitesse hérité n'ont pas de sens ici
+    // en effet la direction et la vitesse héritées n'ont pas de sens ici
     super({x, y, r, speed: 0, dir: 0, color});
     this.velX = velX;
     this.velY = velY;
