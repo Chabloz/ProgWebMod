@@ -10,7 +10,6 @@ export default class CircleBouncing extends Circle {
     super({x, y, r, speed: 0, dir: 0, color});
     this.velX = velX;
     this.velY = velY;
-    this.gravity = 10;
   }
 
   move(deltaT) {
@@ -20,7 +19,7 @@ export default class CircleBouncing extends Circle {
     this.y += distY;
   }
 
-  bounceOffTheWalls(ctx, withElasticity = true) {
+  bounceOffTheWalls(ctx, withElasticity = true, elasticity = 1) {
     let width = ctx.canvas.width;
     let height = ctx.canvas.height;
     if (this.x + this.r > width) {
@@ -35,7 +34,7 @@ export default class CircleBouncing extends Circle {
       this.velY = -Math.abs(this.velY);
       this.y = height - this.r;
       if (withElasticity) {
-        this.velY += this.gravity / 10;
+        this.velY += elasticity;
       }
     }
     if (this.y - this.r < 0) {
@@ -56,8 +55,8 @@ export default class CircleBouncing extends Circle {
    }
  }
 
-  applyGravity(deltaT) {
-    this.velY += this.gravity/1000 * deltaT;
+  applyGravity(deltaT, gravity = 0.01) {
+    this.velY += gravity * deltaT;
   }
 
 }

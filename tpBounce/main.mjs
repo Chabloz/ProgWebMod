@@ -8,6 +8,7 @@ ctx.canvas.width = ctx.canvas.clientWidth;
 ctx.canvas.height = ctx.canvas.clientHeight;
 
 const circles = [];
+const maxNbCircle = 100;
 
 function generatePopcorn() {
   let velX = getRandomInt(-10, 10) / 10;
@@ -20,8 +21,8 @@ function generatePopcorn() {
     velY,
     color: randomColor()
   }));
-  // remove circle if too much on screen
-  if (circles.length > 100) circles.shift();
+  // remove an old circle if too much on screen
+  if (circles.length > maxNbCircle) circles.shift();
 }
 
 let timerPopcorn = 0;
