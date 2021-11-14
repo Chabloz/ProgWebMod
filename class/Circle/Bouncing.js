@@ -3,9 +3,10 @@ import Circle from '../Circle.js';
 export default class CircleBouncing extends Circle {
 
   constructor({x, y , r, velX = 0, velY = 0, color}) {
-    // on voit ici une première problématique de l'heritage
-    // si on a mal pensé la classe mère pour sa spécialisation
-    // en effet la direction et la vitesse héritées n'ont pas de sens ici
+    // On voit ici une première problématique de l'héritage.
+    // On a mal pensé la classe mère pour sa spécialisation.
+    // En effet la direction et la vitesse héritées n'ont pas de sens ici.
+    // Il faudrait donc ré-achitecturer la classe mère, ou changer l'architecture actuelle
     super({x, y, r, speed: 0, dir: 0, color});
     this.velX = velX;
     this.velY = velY;
