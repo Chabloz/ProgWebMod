@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life-like Cellular Automaton </title>
+    <title>Life-like Cellular Automaton</title>
+    <script type="module" src="main.mjs"></script>
     <style>
       body {
         margin: 0;
@@ -83,12 +84,12 @@
         </div>
       </div>
       <div>
-        Tile size: <span id="tileSize"></span>
-        Frame: <span id="nbIter"></span>
-        Timestep: <span id="timestep"></span>
+        Tile size: <span id="tile-size"></span>
+        Gen: <span id="generation"></span>
+        Gen / s: <span id="freq"></span>
         <br>
         Map: <span id="map" data-flat-torus="Flat Torus" data-rectangle="Rectangle"></span>
-        Starting alive %: <span id="aliveProb"></span>
+        Starting alive %: <span id="alive-prob"></span>
         Fps: <span id="fps"></span>
       </div>
     </header>
