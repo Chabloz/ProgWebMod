@@ -1,6 +1,6 @@
 import {getRandomInt} from '../lib/math.js';
 import Circle from '../class/Circle/Bouncing.js';
-import randomColor from '../lib/randomcolor.js';
+import randomColor from '../lib/randomColor.js';
 import MainLoop from '../lib/mainloop.js';
 
 const ctx = document.querySelector('canvas').getContext('2d');

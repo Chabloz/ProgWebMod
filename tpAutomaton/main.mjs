@@ -2,7 +2,7 @@ import Automaton from '../class/Automaton.js';
 import AutomatonInFlatTorus from '../class/Automaton/InFlatTorus.js';
 
 import {domOn} from '../lib/dom.js';
-import randomColor from '../lib/randomcolor.js';
+import randomColor from '../lib/randomColor.js';
 import MainLoop from '../lib/mainloop.js';
 import Keyboard from '../class/Keyboard.js';
 

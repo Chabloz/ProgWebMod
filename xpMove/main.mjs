@@ -1,5 +1,5 @@
 import Circle from '../class/Circle/Moving.js';
-import randomColor from '../lib/randomcolor.js';
+import randomColor from '../lib/randomColor.js';
 import MainLoop from '../lib/mainloop.js';
 import Keyboard from '../class/Keyboard.js';
 
