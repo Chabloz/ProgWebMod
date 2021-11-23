@@ -45,6 +45,8 @@ function updateDom() {
   document.querySelector('#generation').textContent = gen;
   document.querySelector('#tile-size').textContent = tileSize;
   document.querySelector('#alive-prob').textContent = Math.round(isAliveProb * 100);
+  document.querySelector('#fps').textContent = Math.round(MainLoop.getFPS());
+
 
   const domMap = document.querySelector('#map');
   domMap.textContent = mapIsFlatTorus ? domMap.dataset.flatTorus : domMap.dataset.rectangle;
