@@ -4,18 +4,18 @@ import {moduloEuclidian} from '../../lib/math.js';
 
 export default class AutomatonInFlatTorus extends Automaton {
 
-  countAliveMooreNeighborhood({x, y, chebyshevDistance = 1}) {
-    const startX = x - chebyshevDistance;
-    const endX = x + chebyshevDistance;
-    const startY = y - chebyshevDistance;
-    const endY = y + chebyshevDistance;
+  countAliveMooreNeighborhood({row, col, chebyshevDistance = 1}) {
+    const startRow = row - chebyshevDistance;
+    const endRow = row + chebyshevDistance;
+    const startCol = col - chebyshevDistance;
+    const endCol = col + chebyshevDistance;
 
     let nbAliveNeighbors = 0;
-    for (let x = startX; x <= endX; x++) {
-      for (let y = startY; y <= endY; y++) {
-        const posX = moduloEuclidian(x, this.width);
-        const posY = moduloEuclidian(y, this.height);
-        if (this.grid[posX][posY]) nbAliveNeighbors++;
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
+        const posRow = moduloEuclidian(row, this.rows);
+        const posCol = moduloEuclidian(col, this.cols);
+        if (this.grid[posRow][posCol]) nbAliveNeighbors++;
       }
     }
 

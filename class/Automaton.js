@@ -4,8 +4,8 @@ const ALIVE = 1;
 export default class Automaton {
 
   constructor({
-    width = 10,
-    height = 10,
+    cols = 10,
+    rows = 10,
     isAliveProb = 0,
     birthRule = new Set([3]), // Game of Life birth rule by default
     survivalRule = new Set([2, 3]),  // Game of Life survival rule by default
@@ -13,8 +13,8 @@ export default class Automaton {
     aliveColor = 'white',
     deadColor = 'black'
   } = {}) {
-    this.width = width;
-    this.height = height;
+    this.rows = rows;
+    this.cols = cols;
     this.birthRule = birthRule;
     this.survivalRule = survivalRule;
     this.tileSize = tileSize;
@@ -25,10 +25,10 @@ export default class Automaton {
 
   randomize(isAliveProb) {
     this.grid = [];
-    for (let x = 0; x < this.width; x++) {
-      this.grid[x] = [];
-      for (let y = 0; y < this.height; y++) {
-        this.grid[x][y] = Math.random() < isAliveProb ? ALIVE : DEAD;
+    for (let row = 0; row < this.rows; row++) {
+      this.grid[row] = [];
+      for (let col = 0; col < this.cols; col++) {
+        this.grid[row][col] = Math.random() < isAliveProb ? ALIVE : DEAD;
       }
     }
   }
@@ -36,10 +36,10 @@ export default class Automaton {
   applyRule() {
     const toSwitch = [];
 
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        const pos = {x, y};
-        const cell = this.grid[x][y];
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        const pos = {row, col};
+        const cell = this.grid[row][col];
         let nbAliveNeighbors = this.countAliveMooreNeighborhood(pos);
         if (cell == DEAD && this.birthRule.has(nbAliveNeighbors)) {
           toSwitch.push(pos);
@@ -54,20 +54,20 @@ export default class Automaton {
     }
   }
 
-  toggleState({x, y}) {
-    this.grid[x][y] = (this.grid[x][y] + 1) % 2;
+  toggleState({row, col}) {
+    this.grid[row][col] = (this.grid[row][col] + 1) % 2;
   }
 
-  countAliveMooreNeighborhood({x, y, chebyshevDistance = 1}) {
-    const startX = Math.max(0, x - chebyshevDistance);
-    const endX = Math.min(this.width - 1, x + chebyshevDistance);
-    const startY = Math.max(0, y - chebyshevDistance);
-    const endY = Math.min(this.height - 1, y + chebyshevDistance);
+  countAliveMooreNeighborhood({row, col, chebyshevDistance = 1}) {
+    const startRow = Math.max(0, row - chebyshevDistance);
+    const endRow = Math.min(this.rows - 1, row + chebyshevDistance);
+    const startCol = Math.max(0, col - chebyshevDistance);
+    const endCol = Math.min(this.rows - 1, col + chebyshevDistance);
 
     let nbAliveNeighbors = 0;
-    for (let x = startX; x <= endX; x++) {
-      for (let y = startY; y <= endY; y++) {
-        if (this.grid[x][y]) nbAliveNeighbors++;
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
+        if (this.grid[row][col]) nbAliveNeighbors++;
       }
     }
 
@@ -75,11 +75,11 @@ export default class Automaton {
   }
 
   drawTiles(ctx) {
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        const cell = this.grid[x][y];
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        const cell = this.grid[row][col];
         ctx.fillStyle = cell == ALIVE ? this.aliveColor : this.deadColor;
-        ctx.fillRect(x * this.tileSize + 1, y * this.tileSize + 1, this.tileSize - 1, this.tileSize - 1);
+        ctx.fillRect(col * this.tileSize + 1, row * this.tileSize + 1, this.tileSize - 1, this.tileSize - 1);
       }
     }
   }

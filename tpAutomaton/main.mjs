@@ -28,9 +28,9 @@ function generateAutomaton() {
   ctx.canvas.height = ctx.canvas.clientHeight;
 
   const aliveColor = randomColor();
-  const width = Math.round(ctx.canvas.width / tileSize);
-  const height = Math.round(ctx.canvas.height / tileSize);
-  const opt = {width, height, isAliveProb, tileSize, aliveColor, birthRule, survivalRule};
+  const cols = Math.round(ctx.canvas.width / tileSize);
+  const rows = Math.round(ctx.canvas.height / tileSize);
+  const opt = {cols, rows, isAliveProb, tileSize, aliveColor, birthRule, survivalRule};
   if (mapIsFlatTorus) {
     automaton = new AutomatonInFlatTorus(opt);
   } else {
@@ -113,9 +113,9 @@ domOn('.rule', 'click', evt => {
 // Cells click management
 domOn('canvas', 'click', event => {
   const rect = ctx.canvas.getBoundingClientRect();
-  const x = Math.floor((event.clientX - rect.left) / tileSize);
-  const y = Math.floor((event.clientY - rect.top) / tileSize);
-  automaton.toggleState({x, y});
+  const col = Math.floor((event.clientX - rect.left) / tileSize);
+  const row = Math.floor((event.clientY - rect.top) / tileSize);
+  automaton.toggleState({row, col});
 });
 
 /* Main loop */
