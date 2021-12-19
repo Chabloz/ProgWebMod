@@ -12,6 +12,12 @@ export default class CircleBouncing extends Circle {
     this.velY = velY;
   }
 
+  setVelFromAngle(angle) {
+    const speed = Math.sqrt(this.velX**2 + this.velY**2);
+    this.velX = Math.cos(angle) * speed;
+    this.velY = Math.sin(angle) * speed;
+  }
+
   move(deltaT) {
     let distX = this.velX * deltaT;
     let distY = this.velY * deltaT;
