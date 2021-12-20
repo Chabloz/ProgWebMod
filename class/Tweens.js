@@ -1,37 +1,44 @@
-const timingFct = new Map();
-
-timingFct.set('linear', timeFraction => timeFraction);
-
-timingFct.set('quad', timeFraction => timeFraction ** 2);
-
-timingFct.set('cubic', timeFraction => timeFraction ** 3);
-
-timingFct.set('circ', timeFraction => 1 - Math.sin(Math.acos(timeFraction)));
-
-timingFct.set('back', timeFraction => {
-  return Math.pow(timeFraction, 2) * (2.5 * timeFraction - 1.5);
-});
-
-timingFct.set('bounce', timeFraction => {
-  for (let a = 0, b = 1; 1; a += b, b /= 2) {
-    if (timeFraction >= (7 - 4 * a) / 11) {
-      return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
-    }
-  }
-});
-
-timingFct.set('elastic', timeFraction => {
-  return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(31.415926535 * timeFraction)
-});
-
 const makeEaseOut = (timing) => (timeFraction) => 1 - timing(1 - timeFraction);
 
 const makeEaseInOut = (timing) => (timeFraction) => {
   if (timeFraction < .5) return timing(2 * timeFraction) / 2;
   return (2 - timing(2 * (1 - timeFraction))) / 2;
 }
+const easingFct = new Map();
 
-export const timings = [...timingFct.keys()];
+easingFct.set('linear', timeFraction => timeFraction);
+easingFct.set('quad', timeFraction => timeFraction ** 2);
+easingFct.set('cubic', timeFraction => timeFraction ** 3);
+easingFct.set('circ', timeFraction => 1 - Math.sin(Math.acos(timeFraction)));
+easingFct.set('back', timeFraction => {
+  return Math.pow(timeFraction, 2) * (2.5 * timeFraction - 1.5);
+});
+easingFct.set('bounce', timeFraction => {
+  for (let a = 0, b = 1; 1; a += b, b /= 2) {
+    if (timeFraction >= (7 - 4 * a) / 11) {
+      return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+    }
+  }
+});
+easingFct.set('elastic', timeFraction => {
+  return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(31.415926535 * timeFraction)
+});
+
+easingFct.set('quadOut', makeEaseOut(easingFct.get('quad')));
+easingFct.set('cubicOut', makeEaseOut(easingFct.get('cubic')));
+easingFct.set('circOut', makeEaseOut(easingFct.get('circ')));
+easingFct.set('backOut', makeEaseOut(easingFct.get('back')));
+easingFct.set('bounceOut', makeEaseOut(easingFct.get('bounce')));
+easingFct.set('elasticOut', makeEaseOut(easingFct.get('elastic')));
+
+easingFct.set('quadInOut', makeEaseInOut(easingFct.get('quad')));
+easingFct.set('cubicInOut', makeEaseInOut(easingFct.get('cubic')));
+easingFct.set('circInOut', makeEaseInOut(easingFct.get('circ')));
+easingFct.set('backInOut', makeEaseInOut(easingFct.get('back')));
+easingFct.set('bounceInOut', makeEaseInOut(easingFct.get('bounce')));
+easingFct.set('elasticInOut', makeEaseInOut(easingFct.get('elastic')));
+
+export const easings = [...easingFct.keys()];
 
 export default class Tweens{
 
@@ -47,17 +54,11 @@ export default class Tweens{
     after = null,
     loop = false,
     yoyo = false,
-    timing = 'linear',
-    easing = 'in',
+    ease = 'linear',
     animate
   } = {}) {
-    timing = timingFct.get(timing);
-    if (easing == 'out') {
-      timing = makeEaseOut(timing);
-    } else if (easing == 'inOut') {
-      timing = makeEaseInOut(timing);
-    }
-    const tween = {time: 0, duration, timing, from, to, loop, yoyo, animate};
+    ease = easingFct.get(ease);
+    const tween = {time: 0, duration, ease, from, to, loop, yoyo, animate};
     if (after) {
       this.tweensAfter.set(after, tween)
     } else {
@@ -80,7 +81,7 @@ export default class Tweens{
       let timeFraction = tween.time / tween.duration;
       if (timeFraction > 1) timeFraction = 1;
 
-      const progress = (tween.to - tween.from) * tween.timing(timeFraction) + tween.from;
+      const progress = (tween.to - tween.from) * tween.ease(timeFraction) + tween.from;
       tween.animate(progress);
 
       if (timeFraction == 1) {
