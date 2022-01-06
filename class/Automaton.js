@@ -58,6 +58,25 @@ export default class Automaton {
     this.grid[row][col] = (this.grid[row][col] + 1) % 2;
   }
 
+  isValidPos({row, col}) {
+    return row >= 0 && row < this.rows
+        && col >= 0 && col < this.cols;
+  }
+
+  convertRowColToPixel({row, col}) {
+    return {
+      x: col * this.tileSize + this.tileSize / 2,
+      y: row * this.tileSize + this.tileSize / 2,
+    }
+  }
+
+  convertPixelToRowCol({x, y}) {
+    return {
+      row: Math.floor(y / this.tileSize),
+      col: Math.floor(x / this.tileSize),
+    }
+  }
+
   countAliveMooreNeighborhood({row, col, chebyshevDistance = 1}) {
     const startRow = Math.max(0, row - chebyshevDistance);
     const endRow = Math.min(this.rows - 1, row + chebyshevDistance);
@@ -83,7 +102,5 @@ export default class Automaton {
       }
     }
   }
-
-
 
 }

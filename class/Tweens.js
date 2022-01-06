@@ -75,6 +75,11 @@ export default class Tweens{
     this.tweens.delete(tween);
   }
 
+  deleteAll() {
+    this.tweens = new Set();
+    this.tweensAfter = new Map();
+  }
+
   update(dt) {
     for (const tween of this.tweens) {
       tween.time += dt;
@@ -93,6 +98,7 @@ export default class Tweens{
         } else {
           if (this.tweensAfter.has(tween)){
             const nextTween = this.tweensAfter.get(tween);
+            nextTween.time = tween.time - tween.duration;
             this.tweens.add(nextTween);
           }
           this.tweens.delete(tween);
