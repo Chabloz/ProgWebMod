@@ -22,13 +22,11 @@ for (let i = 0; i < particles.length; i++) {
   }})
 }
 
-MainLoop.setUpdate((dt) => {
-  tweens.update(dt);
-});
+MainLoop.setUpdate(dt => tweens.update(dt));
 MainLoop.setDraw(() => {
   ctx.canvas.width = ctx.canvas.clientWidth;
   ctx.canvas.height = ctx.canvas.clientHeight;
-  particles.forEach(c => c.draw(ctx));
+  particles.forEach(particle => particle.draw(ctx));
 });
 MainLoop.setEnd((fps, panic) => {
   if (!panic) return;
