@@ -100,6 +100,7 @@ export default class Tweens{
       } else {
         if (this.tweensAfter.has(tween)) {
           newTweens.push(this.tweensAfter.get(tween));
+          this.tweensAfter.delete(tween);
         }
         this.tweens.delete(tween);
       }
