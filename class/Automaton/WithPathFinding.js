@@ -48,6 +48,7 @@ export default class AutomatonWithPathfinding extends Automaton {
       {row, col: col + 1},
       {row, col: col - 1}
     ];
+    // add diag for Moore neighborhood
     let diagNeighbors = [
       {row: row + 1, col: col - 1},
       {row: row + 1, col: col + 1},
