@@ -81,6 +81,8 @@ export default class Tweens{
   }
 
   update(dt) {
+    const newTweens = [];
+
     for (const tween of this.tweens) {
       tween.time += dt;
       let timeFraction = tween.time / tween.duration;
@@ -88,24 +90,22 @@ export default class Tweens{
 
       const progress = (tween.to - tween.from) * tween.ease(timeFraction) + tween.from;
       tween.animate(progress);
+      if (timeFraction != 1) continue;
 
-      if (timeFraction == 1) {
-
-        if (tween.loop) {
-          if (tween.yoyo) [tween.to, tween.from] = [tween.from, tween.to];
-          if (tween.yoyo && !tween.loop) tween.yoyo = false;
-          tween.time = tween.time - tween.duration;
-        } else {
-          if (this.tweensAfter.has(tween)){
-            const nextTween = this.tweensAfter.get(tween);
-            nextTween.time = tween.time - tween.duration;
-            this.tweens.add(nextTween);
-          }
-          this.tweens.delete(tween);
+      // Manage the end of life of the tween
+      if (tween.loop) {
+        if (tween.yoyo) [tween.to, tween.from] = [tween.from, tween.to];
+        if (tween.yoyo && !tween.loop) tween.yoyo = false;
+        tween.time = 0;
+      } else {
+        if (this.tweensAfter.has(tween)) {
+          newTweens.push(this.tweensAfter.get(tween));
         }
-
+        this.tweens.delete(tween);
       }
     }
+
+    newTweens.forEach(tween => this.tweens.add(tween));
   }
 
 }
