@@ -28,8 +28,8 @@ function generateAutomaton() {
   ctx.canvas.height = ctx.canvas.clientHeight;
 
   const aliveColor = randomColor();
-  const cols = Math.round(ctx.canvas.width / tileSize);
-  const rows = Math.round(ctx.canvas.height / tileSize);
+  const cols = Math.floor(ctx.canvas.width / tileSize);
+  const rows = Math.floor(ctx.canvas.height / tileSize);
   const opt = {cols, rows, isAliveProb, tileSize, aliveColor, birthRule, survivalRule};
   if (mapIsFlatTorus) {
     automaton = new AutomatonInFlatTorus(opt);
