@@ -1,15 +1,19 @@
 export default class Keyboard {
 
-  constructor(useCode = true) {
+  constructor(useCode = true, caseSensitive = true) {
     window.addEventListener('keydown', evt => this.#onKeyDown(evt));
     window.addEventListener('keyup', evt => this.#onKeyUp(evt));
     this.keysPressed = new Set();
     this.doOnKeyDown = new Map();
+    this.caseSensitive = caseSensitive;
     this.codeOrKey = useCode ? 'code' : 'key';
   }
 
   #onKeyDown(evt) {
-    const key = evt[this.codeOrKey];
+    let key = evt[this.codeOrKey];
+    if (!this.caseSensitive) {
+      key = key.toUpperCase();
+    }
     this.keysPressed.add(key);
     if (this.doOnKeyDown.has(key)) {
       const fn = this.doOnKeyDown.get(key);
@@ -18,16 +22,24 @@ export default class Keyboard {
   }
 
   #onKeyUp(evt) {
-    const key = evt[this.codeOrKey];
+    let key = evt[this.codeOrKey];
+    if (!this.caseSensitive) {
+      key = key.toUpperCase();
+    }
     this.keysPressed.delete(key);
   }
 
   onKeyDown(key, fn) {
-    // TODO: authorize multiple listeners on the same key ?
+    if (!this.caseSensitive) {
+      key = key.toUpperCase();
+    }
     this.doOnKeyDown.set(key, fn);
   }
 
   isKeyDown(key) {
+    if (!this.caseSensitive) {
+      key = key.toUpperCase();
+    }
     return this.keysPressed.has(key);
   }
 

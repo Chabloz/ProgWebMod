@@ -10,7 +10,7 @@ const ctx = document.querySelector('canvas').getContext('2d');
 ctx.canvas.width = ctx.canvas.clientWidth;
 ctx.canvas.height = ctx.canvas.clientHeight;
 
-const keyboard = new Keyboard(false);
+const keyboard = new Keyboard(false, false);
 
 /* configuration */
 let freq = 30;
